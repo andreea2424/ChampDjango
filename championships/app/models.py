@@ -1,5 +1,5 @@
 # models.py
-
+from django.utils import timezone
 from django.db import models
 
 class Team(models.Model):
@@ -10,13 +10,22 @@ class Team(models.Model):
     coach = models.CharField(max_length=100, null=True, default=None)
 
 class Championship(models.Model):
+
+    CHAMPIONSHIP_STATES = [
+        ('in_progress', 'In Progress'),
+        ('upcoming', 'Upcoming'),
+        ('finished', 'Finished'),
+    ]
+
+    championship_name = models.CharField(max_length=100)
     year = models.IntegerField(null=True, default=None)
     start_date = models.DateField(null=True, default=None)
     end_date = models.DateField(null=True, default=None)
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='championship_winner')
-    championship_name = models.CharField(max_length=100)
+    state = models.CharField(max_length=20, choices=CHAMPIONSHIP_STATES, default='upcoming')
+    
 
-class Standings(models.Model):
+class Ranking(models.Model): #Clasament
     championship = models.ForeignKey(Championship, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     points = models.IntegerField(null=True, default=None)
@@ -25,10 +34,19 @@ class Standings(models.Model):
     draws = models.IntegerField(null=True, default=None)
 
     class Meta:
-        unique_together = ('championship', 'team')  # Ensure no duplicates for a championship and a team
+        unique_together = ('championship', 'team') 
+
 
 class Match(models.Model):
+    MATCH_STATES = [
+        ('in_progress', 'In Progress'),
+        ('upcoming', 'Upcoming'),
+        ('finished', 'Finished'),
+    ]
+
     final_score = models.CharField(max_length=10)
     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='matches_team1')
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='matches_team2')
-    championship_id = models.ForeignKey(Championship, on_delete=models.CASCADE)
+    championship = models.ForeignKey(Championship, on_delete=models.CASCADE)
+    state = models.CharField(max_length=20, choices=MATCH_STATES, default='upcoming')
+    date = models.DateField(null=True, default=None)
