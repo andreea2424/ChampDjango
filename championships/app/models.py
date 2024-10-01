@@ -19,6 +19,7 @@ class Player(models.Model):
     goals_scored = models.IntegerField(default=0, validators=[MinValueValidator(0)])# constrangere ca valoarea sa fie mai mare decat 0
     yellow_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     red_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    green_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
 class Championship(models.Model):
 
