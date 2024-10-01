@@ -20,6 +20,7 @@ class Player(models.Model):
     yellow_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     red_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     green_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    andi_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
 class Championship(models.Model):
 
