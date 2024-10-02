@@ -23,6 +23,7 @@ class Player(models.Model):
     andi_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     didi_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     didi2_cards = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    nume_branch = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
 class Championship(models.Model):
 
